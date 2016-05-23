@@ -77,11 +77,13 @@ $(document).on("click", ".hood", function(){
 });
 
 $(".mapbox").mouseleave(function(){
+	if($(".hood").hasClass("active")){
 	$(".neighborhoodtitle").text($(".hood.active").text());
 	var selectedneighborhood=$(".hood.active").text();
 	var hoodindex=ABCNeighborhoodsArray.findIndex(function(a){return a === selectedneighborhood});
 	$(".Evictions").text(mymap1._layers[hoodids1[hoodindex]].feature.properties.Evictions);
 	$(".censusvalue").text(mymap1._layers[hoodids1[hoodindex]].feature.properties[map2Property]);
+}
 
 });
 
@@ -147,8 +149,8 @@ function populateList(item){
 	ABCNeighborhoodsArray.push(item.properties.Name);
 	ABCNeighborhoodsClasses.push(item.properties.Name.replace(/(\W|\s)/g,""));
 	$(".hoodlist").append('<li class="hood list-group-item text-center '+item.properties.Name.replace(/(\W|\s)/g,"") +'">'+item.properties.Name+'</li>');
-	hoodids1.push(ABCNeighborhoodsArray.length+31);
-	hoodids2.push(ABCNeighborhoodsArray.length+122);
+	hoodids1.push(ABCNeighborhoodsArray.length+32);
+	hoodids2.push(ABCNeighborhoodsArray.length+123);
 
 }
 
