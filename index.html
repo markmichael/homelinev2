@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Homeline</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<link rel="stylesheet" href="css/bootstrap.css"/>
+		<link rel="stylesheet" href="css/stylesheet.css"/>
+		<link rel="stylesheet" href="css/leaflet.css"/>
+	</head>
+	<body>
+
+	<script src="js/jquery-2.2.3.min.js"></script>
+	<script src="js/bootstrap.js"></script>
+	<script src="js/leaflet.js"></script>
+	<script src="js/superneighborhoodData.js"></script>
+	<script src="js/script.js"></script>
+	
+
+	<div class="container-fluid">
+		<div class="homelinebox">
+			<nav class="navbar navbar-default navbar-fixed-top">
+	  			<div class="container-fluid">
+		    		<div class="navbar-header">
+			      		<a class="navbar-brand svg" href="#">
+			      			<object class="homelinelogo" data="assets/images/homelinelogo.svg">
+			        		<img alt="Brand" src="assets/images/homelinelogo.png">
+			        		</object>
+			      		</a>
+		    		</div>
+		    		<h2 class="navbar-text"><small class="homelinetitle">HomeLine</small></h2>
+		    		<ul class="nav navbar-nav navbar-default navbar-right headernav">
+		    			<li><a href="#abouthomeline">About HomeLine</a></li>
+		    			<li><a href="#">Eviction Resources</a></li>
+		    			<li><a href="#">Contact Us</a></li>
+		    		</ul>
+	  			</div>
+			</nav>
+
+			<div class="row homelinebody">
+				<div class="col-md-2">
+
+					<div class="panel panel-default superneighboorhood">
+					  <div class="panel-heading">
+					    <h4 class="panel-title text-center">Super Neigborhoods</h4>
+					  </div>
+					  <div class="panel-body neighborhoodlist">
+					  <ul class="list-group hoodlist">
+					  </ul>
+					  </div>
+					  <div class="panel-footer">
+					  	<div class="input">
+					      <input id="search" type="text" class="form-control" placeholder="Search neighborhoods">
+					    </div>
+					  </div>
+					</div>
+				</div>
+				<div class="col-md-5 mapbox">
+					<div class="page-header map1title text-center">
+					 <h3 class="mapheader"><small>Evictions</small></h3> <h5 class="mapsubheader"><small> September 2015 - April 2016</small></h5>
+					</div>
+					<div id="map1">
+					</div>
+				</div>
+				<div class="col-md-5 mapbox">
+					<div class="page-header map2title text-center">
+						<h3 class="mapheader"><small>
+							<div class="btn-group">
+								<button class="mappropertyselector btn btn-default dropdown-toggle" data-toggle="dropdown">Total Population <span class="glyphicon glyphicon-menu-down"></span></button>
+								<ul class="dropdown-menu mapproperties">
+								  <li class="dropdown-header">Housing</li>
+								  	<li><a href="#">Total Housing Units </a></li>
+								  	<li><a href="#">Vacant Housing Units </a></li>
+								  <li class="dropdown-header">Demographics </li>
+								  	<li><a href="#">Total Population </a></li>
+								  	<li><a href="#">Hispanic </a></li>
+								  	<li><a href="#">Black </a></li>
+								  	<li><a href="#">Asian </a></li>
+								  	<li><a href="#">Pacific Islander </a></li>
+								  	<li><a href="#">Native American </a></li>
+								  	<li><a href="#">White </a></li>
+								  	<li><a href="#">Other </a></li>
+								  
+								</ul>
+							</div>		
+						</small></h3> <h5 class="mapsubheader"><small> Source: 2010 US Census</small></h5>
+
+					</div>
+					<div id="map2">
+					</div>
+				</div>
+			</div>
+			<div class="homelinefooter row">
+				<div class="col-md-2">
+					<h5 class="neighborhoodtitle text-center"></h5>
+				</div>
+				<div class="col-md-5">
+					<h3 class="align-left">Number of Evictions: <span class="Evictions"></span></h3>
+				</div>
+				<div class="col-md-5">
+				<h3 class="Censusfeature align-left"><span class="censusvalue"></span></h3>
+				</div>
+			</div>
+		</div>
+		<div class="row" id="abouthomeline">
+			<div class="col-md-6 col-md-offset-1">
+			<br>
+				<h1 class="text-center"> About HomeLine</h1>
+				<h3>
+					Becoming homeless is more complicated than being late with your rent one too many times. So many families are only one medical bill or car accident or some other catastrophe away from living on the streets. Gentrification and other community processes drive up costs to make once manageable housing expenses unaffordable.
+					<br><br>
+					Many organizations have allocated resources towards preventing homelessness. Bill assistance and financial counseling programs have provided families with a much needed stopgap as they sort through their financial challenges. But many people don't know that these resources are available or how to access them. 
+					<br><br>
+					HomeLine is a project to identify communities with high eviction rates to help inform decisions on where to direct homelessness prevention and rehousing efforts. It's also our goal to identify early indicators of precarious housing situations so that families can get help sooner and so upstream policy-level solutions can be developed and implemented more confidently.
+				</h3>
+			</div>	
+		</div>
+
+	</div>
+
+	</body>
+</html>

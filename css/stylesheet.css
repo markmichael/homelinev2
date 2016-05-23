@@ -1,0 +1,85 @@
+.homelinebox{
+	height:auto;
+}
+.homelinelogo{
+	height:130%;
+}
+.homelinetitle{
+	color:white;
+}
+a.svg {
+  position: relative;
+  display: inline-block; 
+}
+a.svg:after {
+  content: ""; 
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left:0;
+}
+
+.headernav > li {
+	position:relative;
+	bottom:0;
+	margin-top:2%;
+}
+
+.homelinebody{
+	max-height:80vh;
+	clear:both;
+	margin-top:63px;
+}
+.superneighborhood{
+	height:75vh;
+}
+
+.neighborhoodlist{
+	min-height:69vh;
+	max-height:69vh;
+	overflow-y:scroll;
+}
+.hood{
+	font-size:.8em;
+	
+}
+.map1title, .map2title{
+	margin:0px 0px;
+	padding-bottom:0px;
+	height:auto;
+}
+.mapheader{
+	margin-top:0px;
+	margin-bottom:0px;
+}
+.mapsubheader{
+	margin:0;
+}
+
+#map1, #map2{
+	height:75vh;
+}
+.mappropertyselector{
+	padding:0 2px;
+}
+.homelinefooter{
+	min-height:45px;
+	height:8vh;
+	clear:both;
+	vertical-align:middle;
+	background-color:#2aace3;
+	color:white;
+	vertical-align:text-bottom;
+}
+body>.container-fluid { 
+    background-image: url('assets/images/homelinelogocolor.svg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position:top;
+}
+#abouthomeline{
+	height:90vh;
+}
+
