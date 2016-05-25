@@ -7,6 +7,7 @@ var ABCNeighborhoodsArray=[];
 var ABCNeighborhoodsClasses=[];
 var hoodids1=[];
 var hoodids2=[];
+var ABCZipCodes=[];
 
 //populate superneighborhood list
 
@@ -57,12 +58,16 @@ $(".mapproperties > li > a").click(function(){
 $("#search").keyup(function(e){
         var q = $("#search").val().toUpperCase().replace(/(\W|\s)/g,"");
         if(q>0){
+        	var qString=q.toString();
+        	var zipFilter=ABCZipCodes.map(function(a){return a.includes(qString);});
+        	var temp=ABCNeighborhoodsClasses.filter(function(a,index){return !zipFilter[index];});
+
         }
         else{
-        $(".hood").show();
-        var temp=ABCNeighborhoodsClasses.filter(function(a){return !a.includes(q);});
-        temp.forEach(function(a){$("."+a + ":not(.active)").hide()});   
+        var temp=ABCNeighborhoodsClasses.filter(function(a){return !a.includes(q);});  
     }
+     $(".hood").show();
+    temp.forEach(function(a){$("."+a + ":not(.active)").hide()}); 
     });
 
 //select neighborhood
@@ -148,6 +153,7 @@ $(".mapbox").mouseleave(function(){
 function populateList(item){
 	ABCNeighborhoodsArray.push(item.properties.Name);
 	ABCNeighborhoodsClasses.push(item.properties.Name.replace(/(\W|\s)/g,""));
+	ABCZipCodes.push(item.properties["Zip Code"]);
 	$(".hoodlist").append('<li class="hood list-group-item text-center '+item.properties.Name.replace(/(\W|\s)/g,"") +'">'+item.properties.Name+'</li>');
 	hoodids1.push(ABCNeighborhoodsArray.length+32);
 	hoodids2.push(ABCNeighborhoodsArray.length+123);
