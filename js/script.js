@@ -34,19 +34,20 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 }).addTo(mymap2);
 
 //add and style geoJSON data
-//var map1Property="Evictions";
-//var map2Property="Total Population ";
-//$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
-//var maxProp1=maxMapProperty(map1Property);
-//var maxProp2=maxMapProperty(map2Property);
+var map1Property="Evictions";
+var map2Property="Total Population ";
+$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
+var maxProp1=maxMapProperty(map1Property);
+var maxProp2=maxMapProperty(map2Property);
 
-//var layer2= L.geoJson(superneighborhoodData, {style: style1, onEachFeature: onEachFeature}).addTo(mymap1);
-//var layer2= L.geoJson(superneighborhoodData, {style: style2, onEachFeature: onEachFeature}).addTo(mymap2);
-//zipcodes.features.map(function(a,index){a.properties.Name=zipcodeList[index].toString();});
-//console.dir(JSON.stringify(zipcodes));
-console.dir(zipcodes);
-layer3= L.geoJson(zipcodes, {style: style3}).addTo(mymap1);
-layer4= L.geoJson(zipcodes, {style: style3}).addTo(mymap2);
+var layer1= L.geoJson(superneighborhoodData, {style: style1, onEachFeature: onEachFeature});
+layer1.addTo(mymap1);
+var layer2= L.geoJson(superneighborhoodData, {style: style2, onEachFeature: onEachFeature});
+layer2.addTo(mymap2);
+
+
+layer3= L.geoJson(zipcodes, {style: style1});
+layer4= L.geoJson(zipcodes, {style: style3});
 //change map property
 
 $(".mapproperties > li > a").click(function(){
@@ -175,6 +176,9 @@ function alphabetizeByName(a,b) {
 
 function style1(feature) {
 	var fOpac=feature.properties[map1Property]/maxProp1
+	if(!Boolean(fOpac)){
+		fOpac=0;
+	}
     return {
         fillColor: '#CF000F',
         weight: 1,
