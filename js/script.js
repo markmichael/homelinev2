@@ -45,6 +45,9 @@ layer1.addTo(mymap1);
 var layer2= L.geoJson(superneighborhoodData, {style: style2, onEachFeature: onEachFeature});
 layer2.addTo(mymap2);
 
+//zipcodes.features.map(function(a){a.properties.ACS=zipACS.find(function(b){return a.properties.Name===b.GEO_id2.toString();})});
+//console.dir(JSON.stringify(zipcodes));
+
 
 layer3= L.geoJson(zipcodes, {style: style1});
 layer4= L.geoJson(zipcodes, {style: style3});
