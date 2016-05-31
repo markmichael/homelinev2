@@ -48,9 +48,32 @@ layer2.addTo(mymap2);
 //zipcodes.features.map(function(a){a.properties.ACS=zipACS.find(function(b){return a.properties.Name===b.GEO_id2.toString();})});
 //console.dir(JSON.stringify(zipcodes));
 
+//zipcode layers
+layer3= L.geoJson(zipcodes, {style: style2});
+layer4= L.geoJson(zipcodes, {style: style2});
 
-layer3= L.geoJson(zipcodes, {style: style1});
-layer4= L.geoJson(zipcodes, {style: style3});
+//toggle between zip codes and superneighborhoods on map
+$(".toggleZipsLink").click(function(){
+	if(mymap1.hasLayer(layer3)){
+		mymap1.removeLayer(layer3);
+		mymap2.removeLayer(layer4);
+		layer1.setStyle(style1);
+		layer2.setStyle(style2);
+
+		$('.toggleZips').text("Switch to Zip Codes");
+
+	}
+	else {
+		layer1.setStyle(styleHidden);
+		layer2.setStyle(styleHidden);
+		layer3.addTo(mymap1);
+		layer4.addTo(mymap2);
+
+		$('.toggleZips').text("Switch to Super Neighborhoods");
+	}
+
+});
+
 //change map property
 
 $(".mapproperties > li > a").click(function(){
@@ -201,14 +224,14 @@ function style2(feature) {
         fillOpacity: fOpac
     };    
 }
-function style3(feature) {
+function styleHidden(feature) {
 	//var fOpac=feature.properties[map1Property]/maxProp1
     return {
         fillColor: '#CF000F',
         weight: 1,
-        opacity: 1,
+        opacity: 0,
         color: 'white',
-        fillOpacity: 1
+        fillOpacity: 0
     };
 }
 
