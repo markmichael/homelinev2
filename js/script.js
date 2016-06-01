@@ -72,8 +72,8 @@ var layer2= L.geoJson(superneighborhoodData, {style: style2, onEachFeature: onEa
 layer2.addTo(mymap2);
 
 //zipcode layers
-layer3= L.geoJson(zipcodes, {style: style1});
-layer4= L.geoJson(zipcodes, {style: style2Zip});
+layer3= L.geoJson(zipcodes, {style: style1, onEachFeature: onEachFeature2});
+layer4= L.geoJson(zipcodes, {style: style2Zip, onEachFeature: onEachFeature2});
 
 
 
@@ -133,7 +133,7 @@ $(".mappropertygroups > ul > li > a.zipProp").on("click",function(){
 	$('.mappropertyselector').html(map2PropertyZip+'<span class="glyphicon glyphicon-menu-down"></span>');
 	maxProp2Zip=maxMapPropertyZip(map2PropertyZip);
 	layer4.setStyle(style2Zip);
-	$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
+	$(".Censusfeature").html(map2PropertyZip+": <span class='censusvalue'></span>");
 });
 
 //search neighborhoods
@@ -219,6 +219,55 @@ $(".mapbox").mouseleave(function(){
 			layer2.resetStyle(mymap2._layers[hoodid+91]);
 		}
 
+		function highlightFeature2(e) {
+			if(e.target._map._leaflet_id===29){
+				var hoodid=e.target._leaflet_id;
+			}
+			else{
+				var hoodid=e.target._leaflet_id-227;
+			}
+
+				mymap1._layers[hoodid].setStyle({
+					weight: 1,
+					color: '#777'
+				});
+				console.dir(e);
+				console.dir(mymap1);
+				console.dir(mymap2);
+
+				mymap2._layers[hoodid+227].setStyle({
+					weight: 1,
+					color: '#777'
+				});
+
+				if (!L.Browser.ie && !L.Browser.opera) {
+					mymap1._layers[hoodid].bringToFront();
+					mymap2._layers[hoodid+227].bringToFront();
+				}
+
+			$(".neighborhoodtitle").text(e.target.feature.properties.Name);
+			$(".Evictions").text(e.target.feature.properties.Evictions);
+			if(!Boolean(e.target.feature.properties["ACS"])){
+				$(".censusvalue").text("");
+			}
+			else{
+				$(".censusvalue").text(e.target.feature.properties["ACS"][map2PropertyZip]);
+			}
+		}
+
+
+		function resetHighlight2(e) {
+			if(e.target._map._leaflet_id===29){
+
+				var hoodid=e.target._leaflet_id;
+		}
+			else{
+				var hoodid=e.target._leaflet_id-227;
+			}
+			layer3.resetStyle(mymap1._layers[hoodid]);
+			layer4.resetStyle(mymap2._layers[hoodid+227]);
+		}
+
 		function zoomToFeature(e) {
 			mymap1.fitBounds(e.target.getBounds(), {padding: [80, 80]});
 			mymap2.fitBounds(e.target.getBounds(),{padding: [80, 80]});
@@ -235,6 +284,14 @@ $(".mapbox").mouseleave(function(){
 			layer.on({
 				mouseover: highlightFeature,
 				mouseout: resetHighlight,
+				click: zoomToFeature
+			});
+		}
+
+		function onEachFeature2(feature, layer) {
+			layer.on({
+				mouseover: highlightFeature2,
+				mouseout: resetHighlight2,
 				click: zoomToFeature
 			});
 		}

@@ -81,5 +81,6 @@ body>.container-fluid {
 }
 #abouthomeline{
 	height:90vh;
+	clear:both;
 }
 
