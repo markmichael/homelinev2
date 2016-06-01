@@ -54,6 +54,7 @@ layer4= L.geoJson(zipcodes, {style: style2Zip, onEachFeature: onEachFeature2});
 
 
 
+
 //zipcodes.features.map(function(a){a.properties.ACS=zipACS.find(function(b){return a.properties.Name===b.GEO_id2.toString();})});
 //console.dir(JSON.stringify(zipcodes));
 
@@ -182,7 +183,15 @@ $(".mapbox").mouseleave(function(){
 
 			$(".neighborhoodtitle").text(e.target.feature.properties.Name);
 			$(".Evictions").text(e.target.feature.properties.Evictions);
-			$(".censusvalue").text(e.target.feature.properties[map2Property]);
+			if (map2Property==="Vacant Housing Units "){
+				$(".censusvalue").text(e.target.feature.properties[map2Property]+" ("+Math.floor(100*e.target.feature.properties[map2Property]/e.target.feature.properties["Total Housing Units "])+"%)");
+			}
+			else if(map2Property!=="Total Housing Units "&&map2Property!=="Total Population "){
+				$(".censusvalue").text(e.target.feature.properties[map2Property]+" ("+Math.floor(100*e.target.feature.properties[map2Property]/e.target.feature.properties["Total Population "])+"%)");
+			}
+			else{
+				$(".censusvalue").text(e.target.feature.properties[map2Property]);
+			}
 		}
 
 
@@ -228,6 +237,9 @@ $(".mapbox").mouseleave(function(){
 			$(".Evictions").text(e.target.feature.properties.Evictions);
 			if(!Boolean(e.target.feature.properties["ACS"])){
 				$(".censusvalue").text("");
+			}
+			else if(map2PropertyZip!=="Median Income "&&map2PropertyZip!=="Median Gross Rent "&& map2PropertyZip!=="Total Population "){
+				$(".censusvalue").text(e.target.feature.properties["ACS"][map2PropertyZip]+" ("+Math.floor(100*e.target.feature.properties["ACS"][map2PropertyZip]/e.target.feature.properties["ACS"]["Total Population "])+"%)");
 			}
 			else{
 				$(".censusvalue").text(e.target.feature.properties["ACS"][map2PropertyZip]);
