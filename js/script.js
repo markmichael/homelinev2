@@ -7,30 +7,7 @@ var ABCNeighborhoodsArray=[];
 var ABCNeighborhoodsClasses=[];
 var hoodids1=[];
 var hoodids2=[];
-var ABCZipCodes=[];
-
-var dropDownMenuSN=				  '<li class="dropdown-header">Housing</li>'+
-								  	'<li><a class="SNProp" href="#">Total Housing Units </a></li>'+
-								  	'<li><a class="SNProp" href="#">Vacant Housing Units </a></li>'+
-								  '<li class="dropdown-header">Demographics </li>'+
-								  	'<li><a class="SNProp" href="#">Total Population </a></li>'+
-								  	'<li><a class="SNProp" href="#">Hispanic </a></li>'+
-								  	'<li><a class="SNProp" href="#">Black </a></li>'+
-								  	'<li><a class="SNProp" href="#">Asian </a></li>'+
-								  	'<li><a class="SNProp" href="#">Pacific Islander </a></li>'+
-								  	'<li><a class="SNProp" href="#">Native American </a></li>'+
-								  	'<li><a class="SNProp" href="#">White </a></li>'+
-								  	'<li><a class="SNProp" href="#">Other </a></li>';
-var dropDownMenuZip=			  '<li class="dropdown-header">Demographics </li>'+
-								  	'<li><a href="#">Total Population </a></li>'+
-								  	'<li><a href="#">Black </a></li>'+
-								  	'<li><a href="#">Asian </a></li>'+
-								  	'<li><a href="#">White </a></li>'+
-								  	'<li><a href="#">Other </a></li>'+
-								  '<li class="dropdown-header">Financials </li>'+
-								  	'<li><a href="#">Median Income </a></li>'+
-								  	'<li><a href="#">Median Gross Rent </a></li>'+
-								  	'<li><a href="#">Total Employed </a></li>';								
+var ABCZipCodes=[];						
 
 //populate superneighborhood list
 
@@ -113,6 +90,8 @@ $(".toggleZipsLink").click(function(){
 		$('.mappropertyselector').html(map2PropertyZip+'<span class="glyphicon glyphicon-menu-down"></span>');
 		maxProp2Zip=maxMapPropertyZip(map2PropertyZip);
 		layer4.setStyle(style2Zip);
+
+		$(".Censusfeature").html(map2PropertyZip+": <span class='censusvalue'></span>");
 
 		$('.toggleZips').text("Switch to Super Neighborhoods");
 	}
@@ -358,7 +337,6 @@ function style2Zip(feature) {
 }
 
 function styleHidden(feature) {
-	//var fOpac=feature.properties[map1Property]/maxProp1
     return {
         fillColor: '#CF000F',
         weight: 1,
