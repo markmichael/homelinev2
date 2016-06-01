@@ -17,6 +17,8 @@ ABCneighborhoods.forEach(populateList);
 
 var mymap1 = L.map('map1').setView([29.7604, -95.3698], 11);
 var mymap2 = L.map('map2').setView([29.7604, -95.3698], 11);
+console.dir(mymap1);
+		console.dir(mymap2);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -44,12 +46,14 @@ var layer1= L.geoJson(superneighborhoodData, {style: style1, onEachFeature: onEa
 layer1.addTo(mymap1);
 var layer2= L.geoJson(superneighborhoodData, {style: style2, onEachFeature: onEachFeature});
 layer2.addTo(mymap2);
+console.dir(mymap1);
+		console.dir(mymap2);
 
 //zipcodes.features.map(function(a){a.properties.ACS=zipACS.find(function(b){return a.properties.Name===b.GEO_id2.toString();})});
 //console.dir(JSON.stringify(zipcodes));
 
 //zipcode layers
-layer3= L.geoJson(zipcodes, {style: style2});
+layer3= L.geoJson(zipcodes, {style: style1});
 layer4= L.geoJson(zipcodes, {style: style2});
 
 //toggle between zip codes and superneighborhoods on map
@@ -68,6 +72,8 @@ $(".toggleZipsLink").click(function(){
 		layer2.setStyle(styleHidden);
 		layer3.addTo(mymap1);
 		layer4.addTo(mymap2);
+		console.dir(mymap1);
+		console.dir(mymap2);
 
 		$('.toggleZips').text("Switch to Super Neighborhoods");
 	}
