@@ -88,10 +88,15 @@ $(".toggleZipsLink").click(function(){
 		mymap1.removeLayer(layer3);
 		mymap2.removeLayer(layer4);
 		layer1.setStyle(style1);
-		layer2.setStyle(style2);
 
 		$(".zipProp").addClass("hidden");
 		$(".SNProp").removeClass("hidden");
+
+		$('.mappropertyselector').html(map2Property+'<span class="glyphicon glyphicon-menu-down"></span>');
+		maxProp2=maxMapProperty(map2Property);
+		layer2.setStyle(style2);
+
+		$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
 
 		$('.toggleZips').text("Switch to Zip Codes");
 
@@ -105,6 +110,10 @@ $(".toggleZipsLink").click(function(){
 		$(".SNProp").addClass("hidden");
 		$(".zipProp").removeClass("hidden");
 
+		$('.mappropertyselector').html(map2PropertyZip+'<span class="glyphicon glyphicon-menu-down"></span>');
+		maxProp2Zip=maxMapPropertyZip(map2PropertyZip);
+		layer4.setStyle(style2Zip);
+
 		$('.toggleZips').text("Switch to Super Neighborhoods");
 	}
 
@@ -114,10 +123,8 @@ $(".toggleZipsLink").click(function(){
 
 $(".mappropertygroups > ul > li > a.SNProp").on("click",function(){
 	map2Property= $(this).text();
-	map2PropertyZip=$(this).text();
 	$('.mappropertyselector').html(map2Property+'<span class="glyphicon glyphicon-menu-down"></span>');
 	maxProp2=maxMapProperty(map2Property);
-	maxProp2Zip=maxMapPropertyZip(map2PropertyZip);
 	layer2.setStyle(style2);
 	$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
 });
@@ -125,8 +132,6 @@ $(".mappropertygroups > ul > li > a.zipProp").on("click",function(){
 	map2PropertyZip=$(this).text();
 	$('.mappropertyselector').html(map2PropertyZip+'<span class="glyphicon glyphicon-menu-down"></span>');
 	maxProp2Zip=maxMapPropertyZip(map2PropertyZip);
-	console.dir(map2PropertyZip);
-	console.dir(maxProp2Zip);
 	layer4.setStyle(style2Zip);
 	$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
 });
@@ -171,8 +176,6 @@ $(".mapbox").mouseleave(function(){
 }
 
 });
-console.dir(mymap1);
-console.dir(mymap2);
 
 //map highlighting
 		function highlightFeature(e) {
@@ -321,7 +324,6 @@ function maxMapPropertyZip(mapProperty){
 			return a.properties["ACS"][mapProperty];
 		}
 	});
-	console.dir(props);
 	return Math.max(...props)*1.25;
 }
 
