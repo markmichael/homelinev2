@@ -9,6 +9,29 @@ var hoodids1=[];
 var hoodids2=[];
 var ABCZipCodes=[];
 
+var dropDownMenuSN=				  '<li class="dropdown-header">Housing</li>'+
+								  	'<li><a class="SNProp" href="#">Total Housing Units </a></li>'+
+								  	'<li><a class="SNProp" href="#">Vacant Housing Units </a></li>'+
+								  '<li class="dropdown-header">Demographics </li>'+
+								  	'<li><a class="SNProp" href="#">Total Population </a></li>'+
+								  	'<li><a class="SNProp" href="#">Hispanic </a></li>'+
+								  	'<li><a class="SNProp" href="#">Black </a></li>'+
+								  	'<li><a class="SNProp" href="#">Asian </a></li>'+
+								  	'<li><a class="SNProp" href="#">Pacific Islander </a></li>'+
+								  	'<li><a class="SNProp" href="#">Native American </a></li>'+
+								  	'<li><a class="SNProp" href="#">White </a></li>'+
+								  	'<li><a class="SNProp" href="#">Other </a></li>';
+var dropDownMenuZip=			  '<li class="dropdown-header">Demographics </li>'+
+								  	'<li><a href="#">Total Population </a></li>'+
+								  	'<li><a href="#">Black </a></li>'+
+								  	'<li><a href="#">Asian </a></li>'+
+								  	'<li><a href="#">White </a></li>'+
+								  	'<li><a href="#">Other </a></li>'+
+								  '<li class="dropdown-header">Financials </li>'+
+								  	'<li><a href="#">Median Income </a></li>'+
+								  	'<li><a href="#">Median Gross Rent </a></li>'+
+								  	'<li><a href="#">Total Employed </a></li>';								
+
 //populate superneighborhood list
 
 ABCneighborhoods.forEach(populateList);
@@ -67,6 +90,9 @@ $(".toggleZipsLink").click(function(){
 		layer1.setStyle(style1);
 		layer2.setStyle(style2);
 
+		$(".zipProp").addClass("hidden");
+		$(".SNProp").removeClass("hidden");
+
 		$('.toggleZips').text("Switch to Zip Codes");
 
 	}
@@ -76,6 +102,9 @@ $(".toggleZipsLink").click(function(){
 		layer3.addTo(mymap1);
 		layer4.addTo(mymap2);
 
+		$(".SNProp").addClass("hidden");
+		$(".zipProp").removeClass("hidden");
+
 		$('.toggleZips').text("Switch to Super Neighborhoods");
 	}
 
@@ -83,11 +112,22 @@ $(".toggleZipsLink").click(function(){
 
 //change map property
 
-$(".mapproperties > li > a").click(function(){
+$(".mappropertygroups > ul > li > a.SNProp").on("click",function(){
 	map2Property= $(this).text();
+	map2PropertyZip=$(this).text();
 	$('.mappropertyselector').html(map2Property+'<span class="glyphicon glyphicon-menu-down"></span>');
 	maxProp2=maxMapProperty(map2Property);
+	maxProp2Zip=maxMapPropertyZip(map2PropertyZip);
 	layer2.setStyle(style2);
+	$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
+});
+$(".mappropertygroups > ul > li > a.zipProp").on("click",function(){
+	map2PropertyZip=$(this).text();
+	$('.mappropertyselector').html(map2PropertyZip+'<span class="glyphicon glyphicon-menu-down"></span>');
+	maxProp2Zip=maxMapPropertyZip(map2PropertyZip);
+	console.dir(map2PropertyZip);
+	console.dir(maxProp2Zip);
+	layer4.setStyle(style2Zip);
 	$(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
 });
 
@@ -115,8 +155,7 @@ $(document).on("click", ".hood", function(){
 	$(this).siblings().removeClass("active");
 	var selectedneighborhood=$(this).text();
 	var hoodindex=ABCNeighborhoodsArray.findIndex(function(a){return a === selectedneighborhood});
-	console.dir(hoodids1);
-	console.dir(hoodindex);
+
 	mymap1.fitBounds(mymap1._layers[hoodids1[hoodindex]].getBounds(), {padding: [80, 80]});
 	mymap2.fitBounds(mymap2._layers[hoodids2[hoodindex]].getBounds(), {padding: [80, 80]});
 });
@@ -282,6 +321,7 @@ function maxMapPropertyZip(mapProperty){
 			return a.properties["ACS"][mapProperty];
 		}
 	});
+	console.dir(props);
 	return Math.max(...props)*1.25;
 }
 
