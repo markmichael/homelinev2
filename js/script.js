@@ -17,8 +17,6 @@ ABCneighborhoods.forEach(populateList);
 
 var mymap1 = L.map('map1').setView([29.7604, -95.3698], 11);
 var mymap2 = L.map('map2').setView([29.7604, -95.3698], 11);
-console.dir(mymap1);
-		console.dir(mymap2);
 
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -38,23 +36,28 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={
 //add and style geoJSON data
 var map1Property="Evictions";
 var map2Property="Total Population ";
+var map2PropertyZip="Total Population ";
+
+
 $(".Censusfeature").html(map2Property+": <span class='censusvalue'></span>");
 var maxProp1=maxMapProperty(map1Property);
 var maxProp2=maxMapProperty(map2Property);
-
+var maxProp2Zip=maxMapPropertyZip(map2PropertyZip)
 var layer1= L.geoJson(superneighborhoodData, {style: style1, onEachFeature: onEachFeature});
 layer1.addTo(mymap1);
 var layer2= L.geoJson(superneighborhoodData, {style: style2, onEachFeature: onEachFeature});
 layer2.addTo(mymap2);
-console.dir(mymap1);
-		console.dir(mymap2);
+
+//zipcode layers
+layer3= L.geoJson(zipcodes, {style: style1});
+layer4= L.geoJson(zipcodes, {style: style2Zip});
+
+
 
 //zipcodes.features.map(function(a){a.properties.ACS=zipACS.find(function(b){return a.properties.Name===b.GEO_id2.toString();})});
 //console.dir(JSON.stringify(zipcodes));
 
-//zipcode layers
-layer3= L.geoJson(zipcodes, {style: style1});
-layer4= L.geoJson(zipcodes, {style: style2});
+
 
 //toggle between zip codes and superneighborhoods on map
 $(".toggleZipsLink").click(function(){
@@ -72,8 +75,6 @@ $(".toggleZipsLink").click(function(){
 		layer2.setStyle(styleHidden);
 		layer3.addTo(mymap1);
 		layer4.addTo(mymap2);
-		console.dir(mymap1);
-		console.dir(mymap2);
 
 		$('.toggleZips').text("Switch to Super Neighborhoods");
 	}
@@ -114,9 +115,12 @@ $(document).on("click", ".hood", function(){
 	$(this).siblings().removeClass("active");
 	var selectedneighborhood=$(this).text();
 	var hoodindex=ABCNeighborhoodsArray.findIndex(function(a){return a === selectedneighborhood});
+	console.dir(hoodids1);
+	console.dir(hoodindex);
 	mymap1.fitBounds(mymap1._layers[hoodids1[hoodindex]].getBounds(), {padding: [80, 80]});
 	mymap2.fitBounds(mymap2._layers[hoodids2[hoodindex]].getBounds(), {padding: [80, 80]});
 });
+
 
 $(".mapbox").mouseleave(function(){
 	if($(".hood").hasClass("active")){
@@ -128,28 +132,32 @@ $(".mapbox").mouseleave(function(){
 }
 
 });
-
+console.dir(mymap1);
+console.dir(mymap2);
 
 //map highlighting
 		function highlightFeature(e) {
-			var hoodid=e.target._leaflet_id;
-			if(e.target._map._leaflet_id===31){
-				hoodid-=91;
+			if(e.target._map._leaflet_id===29){
+				var hoodid=e.target._leaflet_id;
+			}
+			else{
+				var hoodid=e.target._leaflet_id-91;
 			}
 
-			mymap1._layers[hoodid].setStyle({
-				weight: 1,
-				color: '#777'
-			})
-			mymap2._layers[hoodid+91].setStyle({
-				weight: 1,
-				color: '#777'
-			})
+				mymap1._layers[hoodid].setStyle({
+					weight: 1,
+					color: '#777'
+				});
 
-			if (!L.Browser.ie && !L.Browser.opera) {
-				mymap1._layers[hoodid].bringToFront();
-				mymap2._layers[hoodid+91].bringToFront();
-			}
+				mymap2._layers[hoodid+91].setStyle({
+					weight: 1,
+					color: '#777'
+				});
+
+				if (!L.Browser.ie && !L.Browser.opera) {
+					mymap1._layers[hoodid].bringToFront();
+					mymap2._layers[hoodid+91].bringToFront();
+				}
 
 			$(".neighborhoodtitle").text(e.target.feature.properties.Name);
 			$(".Evictions").text(e.target.feature.properties.Evictions);
@@ -158,9 +166,12 @@ $(".mapbox").mouseleave(function(){
 
 
 		function resetHighlight(e) {
-			var hoodid=e.target._leaflet_id;
-			if(e.target._map._leaflet_id===31){
-				hoodid-=91;
+			if(e.target._map._leaflet_id===29){
+
+				var hoodid=e.target._leaflet_id;
+		}
+			else{
+				var hoodid=e.target._leaflet_id-91;
 			}
 			layer1.resetStyle(mymap1._layers[hoodid]);
 			layer2.resetStyle(mymap2._layers[hoodid+91]);
@@ -230,6 +241,23 @@ function style2(feature) {
         fillOpacity: fOpac
     };    
 }
+
+function style2Zip(feature) {
+	if(!Boolean(feature.properties["ACS"])){
+		fOpac=0;
+	}
+	else{
+		var fOpac=feature.properties["ACS"][map2PropertyZip]/maxProp2Zip;
+	}
+    return {
+        fillColor: '#19b5fe',
+        weight: 1,
+        opacity: 1,
+        color: 'white',
+        fillOpacity: fOpac
+    };    
+}
+
 function styleHidden(feature) {
 	//var fOpac=feature.properties[map1Property]/maxProp1
     return {
@@ -243,6 +271,17 @@ function styleHidden(feature) {
 
 function maxMapProperty(mapProperty){
 	var props=superneighborhoodData.features.map(function(a){return a.properties[mapProperty];});
+	return Math.max(...props)*1.25;
+}
+function maxMapPropertyZip(mapProperty){
+	var props=zipcodes.features.map(function(a){
+		if(!Boolean(a.properties["ACS"])){
+			return 0;
+		}
+		else{
+			return a.properties["ACS"][mapProperty];
+		}
+	});
 	return Math.max(...props)*1.25;
 }
 
