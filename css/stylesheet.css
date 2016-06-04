@@ -79,8 +79,11 @@ body>.container-fluid {
     background-size: cover;
     background-position:top;
 }
-#abouthomeline{
-	height:90vh;
+#abouthomeline, #resources{
+	height:80vh;
 	clear:both;
+}
+#resources>div>h3>a{
+	color:#2aace3 !important;
 }
 
