@@ -112,11 +112,39 @@ $(".mappropertygroups > ul > li > a.zipProp").on("click",function(){
 	layer4.setStyle(style2Zip);
 	$(".Censusfeature").html(map2PropertyZip+": <span class='censusvalue'></span>");
 });
-
 //search neighborhoods
+console.dir(mymap1._layers);
 
 $("#search").keyup(function(e){
         var q = $("#search").val().toUpperCase().replace(/(\W|\s)/g,"");
+        //zoom to zip code when enter is pressed
+        if (e.keyCode == 13) {
+	        if(q>10000){
+	        	if(!mymap1.hasLayer(layer3)){
+	        		$(".toggleZipsLink").click();
+	        	}
+
+	        	var qString=q.toString();
+	        	var zipFilter=ABCZipCodes.map(function(a){return a.includes(qString);});
+	        	var temp=ABCNeighborhoodsClasses.filter(function(a,index){return !zipFilter[index];});
+
+	        	index1=_.findKey(mymap1._layers, function(a){
+	        		if(Boolean(a.feature)){
+	        			return a.feature.properties.Name===qString;
+	        		}
+	        		else return false
+	        	});
+	        	index2=_.findKey(mymap2._layers, function(a){
+	        		if(Boolean(a.feature)){
+	        			return a.feature.properties.Name===qString;
+	        		}
+	        		else return false;
+	        	});
+
+	        	mymap1.fitBounds(mymap1._layers[index1].getBounds(), {padding: [100, 100]});
+				mymap2.fitBounds(mymap2._layers[index2].getBounds(), {padding: [100, 100]});
+	        }
+	    }
         if(q>0){
         	var qString=q.toString();
         	var zipFilter=ABCZipCodes.map(function(a){return a.includes(qString);});
@@ -129,6 +157,8 @@ $("#search").keyup(function(e){
      $(".hood").show();
     temp.forEach(function(a){$("."+a + ":not(.active)").hide()}); 
     });
+
+  
 
 //select neighborhood
 
