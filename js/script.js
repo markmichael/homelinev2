@@ -53,11 +53,8 @@ layer3= L.geoJson(zipcodes, {style: style1, onEachFeature: onEachFeature2});
 layer4= L.geoJson(zipcodes, {style: style2Zip, onEachFeature: onEachFeature2});
 
 
-
-
 //zipcodes.features.map(function(a){a.properties.ACS=zipACS.find(function(b){return a.properties.Name===b.GEO_id2.toString();})});
 //console.dir(JSON.stringify(zipcodes));
-
 
 
 //toggle between zip codes and superneighborhoods on map
@@ -219,9 +216,6 @@ $(".mapbox").mouseleave(function(){
 					weight: 1,
 					color: '#777'
 				});
-				console.dir(e);
-				console.dir(mymap1);
-				console.dir(mymap2);
 
 				mymap2._layers[hoodid+227].setStyle({
 					weight: 1,
